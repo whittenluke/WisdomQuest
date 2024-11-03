@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed7b7727514946b2abe4804b621b6a7, type: 3}
+  m_Name: Welcome
+  m_EditorClassIdentifier: 
+  title: Welcome to the Library
+  description: Basic understanding of the Library of Light
+  area: General
+  experienceValue: 10
+  icon: {fileID: 0}
+  timeToLearn: 3
+  studyText: The Library of Light is a mystical place where knowledge takes physical
+    form...

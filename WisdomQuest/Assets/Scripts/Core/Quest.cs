@@ -8,6 +8,7 @@ public class Quest : ScriptableObject
     public string description;
     public float experienceReward;
     public KnowledgePiece[] knowledgeRewards;
+    public bool autoCompleteWhenRequirementsMet = true;
     
     public UnityEvent onQuestAccepted;
     public UnityEvent onQuestCompleted;
