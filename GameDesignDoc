@@ -1,0 +1,179 @@
+# WisdomQuest: Game Design Document
+
+## 1. Vision & Scope
+
+### Core Concept
+WisdomQuest is an enchanting open-world game where players can master various knowledge areas, with each mastery visibly changing both their character and their abilities to interact with the world.
+
+### Key Features
+* Open-world exploration
+* Multiple knowledge areas to master
+* Character evolution based on learned knowledge
+* Questing system tied to knowledge acquisition
+* Flexible gameplay allowing for both focused learning and free exploration
+
+### Future Possibilities
+* Expanded knowledge areas (e.g., science, art, engineering, astronomy)
+* Combining knowledge from different areas for unique abilities
+* Advanced character customization based on learned skills
+* Multiplayer and community features
+* AI-driven adaptive learning content
+
+## 2. Design Principles
+* **Scalability:** All systems should be designed to easily accommodate future expansions
+* **Modularity:** Components should be self-contained and easily interchangeable
+* **Clarity:** Code and systems should be well-documented and easily understandable
+* **Performance:** The game should maintain high performance even as complexity increases
+
+## 3. MVP Technical Foundation
+
+### Core Systems
+
+#### 1. Player System
+```csharp
+public class PlayerController : MonoBehaviour
+{
+    // Handle movement, interaction, and camera control
+}
+
+public class PlayerData : MonoBehaviour
+{
+    // Store player stats, inventory, and progress
+}
+```
+
+#### 2. Knowledge System
+```csharp
+public class KnowledgeManager : MonoBehaviour
+{
+    // Manage acquisition and storage of knowledge pieces
+}
+
+public class KnowledgePiece : ScriptableObject
+{
+    // Define properties of individual knowledge pieces
+}
+```
+
+#### 3. Quest System
+```csharp
+public class QuestManager : MonoBehaviour
+{
+    // Handle quest assignment, tracking, and completion
+}
+
+public class Quest : ScriptableObject
+{
+    // Define quest properties and rewards
+}
+```
+
+#### 4. Interaction System
+```csharp
+public interface IInteractable
+{
+    void Interact(PlayerController player);
+}
+
+public class InteractionManager : MonoBehaviour
+{
+    // Manage player interactions with the world
+}
+```
+
+#### 5. Save System
+```csharp
+public class SaveManager : MonoBehaviour
+{
+    // Handle saving and loading game state
+}
+```
+
+#### 6. UI System
+```csharp
+public class UIManager : MonoBehaviour
+{
+    // Manage all UI elements and interactions
+}
+```
+
+### MVP Scene: Library of Light
+
+#### Environment
+* **Dimensions:** 50x50 units
+* **Areas:**
+  * Central reading area
+  * Knowledge area selection zone
+  * Quest board
+  * Exit to future open world
+
+#### Interactions
+* Knowledge area selection
+* Basic quest acceptance
+* Dialogue with one NPC librarian
+
+## 4. Implementation Path
+
+### Phase 1: Core Framework
+* Set up project in Unity 2022.3.51f1 LTS
+* Implement basic PlayerController with movement and camera
+* Create KnowledgeManager and KnowledgePiece classes
+* Develop simple QuestManager and Quest classes
+
+### Phase 2: Library of Light Scene
+* Build basic Library of Light environment
+* Implement InteractionManager
+* Create NPC with basic dialogue system
+* Set up knowledge area selection interface
+
+### Phase 3: Game Loop
+* Implement quest acceptance and tracking
+* Create simple knowledge piece acquisition system
+* Develop basic UI for player status and inventory
+* Implement SaveManager for basic game state persistence
+
+### Phase 4: Polish and Testing
+* Refine player movement and camera controls
+* Enhance UI and add basic tutorials
+* Implement simple sound effects and background music
+* Conduct thorough testing and bug fixing
+
+## 5. Extensibility Points
+
+### Knowledge Areas
+* Design KnowledgeArea class to be easily expandable
+* Create a modular quest generation system for each area
+
+### Character Evolution
+* Implement a flexible character modification system
+* Design visual changes to be tied to knowledge levels
+
+### World Expansion
+* Plan for seamless integration of new areas beyond the Library
+* Design modular environment pieces for easy world-building
+
+## 6. Unity Best Practices
+* Use ScriptableObjects for data-driven design (quests, knowledge pieces)
+* Implement the Observer pattern for event-driven programming
+* Utilize Unity's new Input System for better input handling
+* Use addressables for efficient asset management
+* Implement object pooling for performance optimization
+
+## 7. Testing Milestones
+* Player Movement and Interaction
+* Knowledge Area Selection
+* Quest Acceptance and Tracking
+* Knowledge Piece Acquisition
+* Save/Load Functionality
+
+## 8. MVP Completion Criteria
+* Player can move and interact in the Library of Light
+* At least one knowledge area is selectable
+* Player can accept and complete a basic quest
+* Knowledge pieces can be acquired and stored
+* Game state can be saved and loaded
+* Basic UI provides necessary player feedback
+
+---
+
+*This document provides a clear path for MVP development while laying the groundwork for future expansion. It focuses on creating a solid, extensible foundation in Unity, allowing for the gradual implementation of more complex features as the project evolves.*
