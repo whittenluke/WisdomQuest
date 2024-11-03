@@ -53,4 +53,7 @@ crashlytics-build.properties
 .Trashes
 Icon?
 ehthumbs.db
-Thumbs.db 
+Thumbs.db
+
+# Project specific
+GameDesignDoc
