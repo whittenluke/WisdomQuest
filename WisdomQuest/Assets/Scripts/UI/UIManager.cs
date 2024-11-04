@@ -1,27 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
     public static UIManager Instance => instance;
-
+    
+    [Header("Interaction UI")]
+    [SerializeField] private GameObject interactionPromptPanel;
+    [SerializeField] private TextMeshProUGUI interactionPromptText;
+    
     [Header("Player HUD")]
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI experienceText;
-    [SerializeField] private Slider experienceBar;
-    
-    [Header("Interaction UI")]
-    [SerializeField] private GameObject interactionPrompt;
-    [SerializeField] private TextMeshProUGUI interactionText;
     
     [Header("Quest UI")]
     [SerializeField] private GameObject questPanel;
-    [SerializeField] private TextMeshProUGUI questTitle;
-    [SerializeField] private TextMeshProUGUI questDescription;
-    
-    private PlayerData playerData;
+    [SerializeField] private TextMeshProUGUI questTitleText;
+    [SerializeField] private TextMeshProUGUI questDescriptionText;
     
     private void Awake()
     {
@@ -36,41 +32,40 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void Start()
-    {
-        playerData = FindObjectOfType<PlayerData>();
-        UpdateHUD();
-    }
-    
-    public void UpdateHUD()
-    {
-        if (playerData == null) return;
-        
-        levelText.text = $"Level {playerData.playerLevel}";
-        experienceText.text = $"{playerData.experience:F0} / {playerData.playerLevel * 100f:F0}";
-        experienceBar.value = playerData.experience / (playerData.playerLevel * 100f);
-    }
-    
     public void ShowInteractionPrompt(string prompt)
     {
-        interactionPrompt.SetActive(true);
-        interactionText.text = prompt;
+        interactionPromptPanel.SetActive(true);
+        interactionPromptText.text = prompt;
     }
     
     public void HideInteractionPrompt()
     {
-        interactionPrompt.SetActive(false);
+        interactionPromptPanel.SetActive(false);
+    }
+    
+    public void UpdateHUD(int level, float experience)
+    {
+        if (levelText != null)
+            levelText.text = $"Level: {level}";
+        if (experienceText != null)
+            experienceText.text = $"XP: {experience:F0}";
     }
     
     public void ShowQuest(Quest quest)
     {
-        questPanel.SetActive(true);
-        questTitle.text = quest.title;
-        questDescription.text = quest.description;
+        if (questPanel != null)
+        {
+            questPanel.SetActive(true);
+            questTitleText.text = quest.title;
+            questDescriptionText.text = quest.description;
+        }
     }
     
     public void HideQuest()
     {
-        questPanel.SetActive(false);
+        if (questPanel != null)
+        {
+            questPanel.SetActive(false);
+        }
     }
 }

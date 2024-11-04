@@ -1,65 +1,79 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
-    [SerializeField] private float interactionRange = 2f;
-    [SerializeField] private LayerMask interactableMask;
+    [Header("Detection")]
+    [SerializeField] private float interactionRange = 3f;
+    [SerializeField] private LayerMask interactionMask;
     
-    private Camera mainCamera;
-    private List<IInteractable> nearbyInteractables = new List<IInteractable>();
+    private PlayerInputs playerInputs;
+    private IInteractable currentInteractable;
+    private PlayerController playerController;
     
     private void Awake()
     {
-        mainCamera = Camera.main;
+        playerInputs = new PlayerInputs();
+        playerInputs.Player.Interact.performed += OnInteract;
+        playerController = GetComponent<PlayerController>();
+    }
+    
+    private void OnEnable()
+    {
+        playerInputs.Enable();
+    }
+    
+    private void OnDisable()
+    {
+        playerInputs.Disable();
     }
     
     private void Update()
     {
-        DetectInteractables();
-        HandleInteraction();
+        DetectInteractable();
     }
     
-    private void DetectInteractables()
+    private void DetectInteractable()
     {
-        nearbyInteractables.Clear();
-        
-        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, interactableMask);
-        foreach (var collider in colliders)
+        // Raycast forward from player
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionMask))
         {
-            if (collider.TryGetComponent<IInteractable>(out var interactable))
+            // Try to get IInteractable from hit object
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            if (interactable != null)
             {
-                nearbyInteractables.Add(interactable);
+                if (currentInteractable != interactable)
+                {
+                    currentInteractable = interactable;
+                    UIManager.Instance.ShowInteractionPrompt(interactable.GetInteractionPrompt());
+                }
+            }
+            else
+            {
+                ClearInteractable();
             }
         }
-    }
-    
-    private void HandleInteraction()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && nearbyInteractables.Count > 0)
+        else
         {
-            // Interact with the closest interactable
-            IInteractable closest = GetClosestInteractable();
-            closest?.Interact(GetComponent<PlayerController>());
+            ClearInteractable();
         }
     }
     
-    private IInteractable GetClosestInteractable()
+    private void ClearInteractable()
     {
-        IInteractable closest = null;
-        float closestDistance = float.MaxValue;
-        
-        foreach (var interactable in nearbyInteractables)
+        if (currentInteractable != null)
         {
-            float distance = Vector3.Distance(transform.position, 
-                (interactable as MonoBehaviour).transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closest = interactable;
-            }
+            currentInteractable = null;
+            UIManager.Instance.HideInteractionPrompt();
         }
-        
-        return closest;
+    }
+    
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (currentInteractable != null)
+        {
+            currentInteractable.Interact(playerController);
+        }
     }
 }
