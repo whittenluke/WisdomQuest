@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform cameraTarget;
     
+    private PlayerInputs playerInputs;
     private Vector2 moveInput;
     private CharacterController characterController;
     private Camera mainCamera;
@@ -19,6 +20,20 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
+        
+        playerInputs = new PlayerInputs();
+        playerInputs.Player.Movement.performed += OnMove;
+        playerInputs.Player.Movement.canceled += OnMove;
+    }
+    
+    private void OnEnable()
+    {
+        playerInputs.Enable();
+    }
+    
+    private void OnDisable()
+    {
+        playerInputs.Disable();
     }
     
     private void Update()
