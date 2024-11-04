@@ -3,27 +3,21 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    private static UIManager instance;
-    public static UIManager Instance => instance;
-    
-    [Header("Interaction UI")]
-    [SerializeField] private GameObject interactionPromptPanel;
-    [SerializeField] private TextMeshProUGUI interactionPromptText;
-    
-    [Header("Player HUD")]
+    [Header("UI Text Elements")]
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI experienceText;
-    
-    [Header("Quest UI")]
-    [SerializeField] private GameObject questPanel;
     [SerializeField] private TextMeshProUGUI questTitleText;
     [SerializeField] private TextMeshProUGUI questDescriptionText;
-    
+    [SerializeField] private GameObject interactionPrompt;
+    [SerializeField] private GameObject questPanel;
+
+    public static UIManager Instance { get; private set; }
+
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -31,41 +25,51 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    public void ShowInteractionPrompt(string prompt)
-    {
-        interactionPromptPanel.SetActive(true);
-        interactionPromptText.text = prompt;
-    }
-    
-    public void HideInteractionPrompt()
-    {
-        interactionPromptPanel.SetActive(false);
-    }
-    
+
     public void UpdateHUD(int level, float experience)
     {
-        if (levelText != null)
-            levelText.text = $"Level: {level}";
-        if (experienceText != null)
-            experienceText.text = $"XP: {experience:F0}";
+        UpdateLevelText(level);
+        UpdateExperienceText((int)experience, 100);
     }
-    
-    public void ShowQuest(Quest quest)
+
+    public void ShowInteractionPrompt()
+    {
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(true);
+    }
+
+    public void HideInteractionPrompt()
+    {
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(false);
+    }
+
+    public void ShowQuest(string title, string description)
     {
         if (questPanel != null)
         {
             questPanel.SetActive(true);
-            questTitleText.text = quest.title;
-            questDescriptionText.text = quest.description;
+            UpdateQuestInfo(title, description);
         }
     }
-    
-    public void HideQuest()
+
+    private void UpdateLevelText(int level)
     {
-        if (questPanel != null)
-        {
-            questPanel.SetActive(false);
-        }
+        if (levelText != null)
+            levelText.text = $"Level: {level}";
+    }
+
+    private void UpdateExperienceText(int currentExp, int maxExp)
+    {
+        if (experienceText != null)
+            experienceText.text = $"XP: {currentExp}/{maxExp}";
+    }
+
+    private void UpdateQuestInfo(string title, string description)
+    {
+        if (questTitleText != null)
+            questTitleText.text = title;
+        if (questDescriptionText != null)
+            questDescriptionText.text = description;
     }
 }
