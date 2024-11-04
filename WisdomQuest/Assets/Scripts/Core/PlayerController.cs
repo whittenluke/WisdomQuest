@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 720f;
+    
+    [Header("References")]
+    [SerializeField] private Transform cameraTarget;
     
     private Vector2 moveInput;
     private CharacterController characterController;
