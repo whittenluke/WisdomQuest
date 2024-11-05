@@ -37,7 +37,7 @@ public class LibrarianNPC : MonoBehaviour, IInteractable
             if (!QuestManager.Instance.IsQuestActive(quest) && 
                 !QuestManager.Instance.IsQuestCompleted(quest))
             {
-                UIManager.Instance.ShowQuest(quest);
+                UIManager.Instance.ShowQuest(quest.title, quest.description);
                 break;
             }
         }

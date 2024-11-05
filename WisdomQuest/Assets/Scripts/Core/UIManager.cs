@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI experienceText;
     [SerializeField] private TextMeshProUGUI questTitleText;
     [SerializeField] private TextMeshProUGUI questDescriptionText;
+    [SerializeField] private TextMeshProUGUI interactionPromptText;
     [SerializeField] private GameObject interactionPrompt;
     [SerializeField] private GameObject questPanel;
 
@@ -32,11 +33,15 @@ public class UIManager : MonoBehaviour
         UpdateExperienceText((int)experience, 100);
     }
 
-    public void ShowInteractionPrompt()
+    public void ShowInteractionPrompt(string promptText)
+{
+    if (interactionPrompt != null)
     {
-        if (interactionPrompt != null)
-            interactionPrompt.SetActive(true);
+        interactionPrompt.SetActive(true);
+        if (interactionPromptText != null)
+            interactionPromptText.text = promptText;
     }
+}
 
     public void HideInteractionPrompt()
     {

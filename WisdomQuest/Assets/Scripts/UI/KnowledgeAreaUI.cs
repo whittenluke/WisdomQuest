@@ -33,7 +33,8 @@ public class KnowledgeAreaUI : MonoBehaviour, IInteractable
         var pieces = KnowledgeManager.Instance.GetKnowledgePieces(areaName);
         if (pieces.Count > 0)
         {
-            UIManager.Instance.ShowQuest(ScriptableObject.CreateInstance<Quest>());
+            // Update to provide both title and description
+            UIManager.Instance.ShowQuest($"Study {areaName}", $"Explore knowledge pieces in the {areaName} area.");
         }
     }
     

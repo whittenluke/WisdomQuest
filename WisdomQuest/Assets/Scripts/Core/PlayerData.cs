@@ -23,7 +23,7 @@ public class PlayerData : MonoBehaviour
     {
         experience += amount;
         CheckLevelUp();
-        UIManager.Instance.UpdateHUD();
+        UIManager.Instance.UpdateHUD(playerLevel, experience);  // Add the parameters here
     }
     
     public void AddKnowledgeProgress(string area, float amount)
