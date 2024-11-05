@@ -86,9 +86,8 @@ public class SaveManager : MonoBehaviour
     {
         var playerData = FindObjectOfType<PlayerData>();
         playerData.LoadSaveData(data);
-        UIManager.Instance.UpdateHUD();
+        UIManager.Instance.UpdateHUD(data.level, data.experience);
     }
-    
     private void LoadQuestData(QuestSaveData data)
     {
         QuestManager.Instance.LoadSaveData(data);
